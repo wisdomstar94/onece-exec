@@ -1,4 +1,5 @@
-use std::{fs, path::Path};
+use std::{fs, path::Path, time::SystemTime};
+use chrono::DateTime;
 
 #[derive(clap::Args)]
 #[command(
@@ -30,6 +31,7 @@ pub fn run(args: CliArgs) {
 
   if let (Some(path), Some(onece_command)) = (args.path, args.onece) {
     let path_obj = Path::new(&path);
+
     if is_exist(path_obj) == false {
       // let result = std::process::Command::new(onece_command).output();
       match run_command(onece_command.as_str()) {
@@ -40,7 +42,14 @@ pub fn run(args: CliArgs) {
           println!("onece 명령어 실패..! : {:?}", error);
         },
       }
-      fs::write(path_obj, String::from("")).unwrap();
+      
+      match fs::create_dir_all(path_obj.parent().unwrap()) {
+        Ok(_) => {},
+        Err(_) => {},
+      }
+      let now: SystemTime = SystemTime::now();
+      let dt: DateTime<chrono::Local> = now.clone().into();
+      fs::write(path_obj, String::from(format!("[{}] onece-exec 에 의해 생성된 파일입니다.", dt.format("%Y-%m-%d %H:%M:%S")))).unwrap();
     } 
 
     if let Some(always_command) = args.always {
