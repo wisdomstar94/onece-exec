@@ -1,13 +1,13 @@
 {
   "name": "@wisdomstar94/onece-exec",
-  "version": "0.0.1-test.3",
+  "version": "0.0.1-test.4",
   "description": "한번만 실행되는 명령어와 항상 실행되는 명령어를 지정할 수 있는 기능을 제공하는 Rust 로 제작된 cli 입니다.",
   "main": "index.js",
   "scripts": {
     "postinstall": "node ./npm/install.js"
   },
   "bin": {
-    "onece-exec": "./npm/run.js"
+    "onece-exec": "./bin/onece-exec"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/wisdomstar94/onece-exec#readme",
   "files": [
     "npm/**/*",
-    "node_modules/**/*"
+    "bin/**/*"
   ],
   "dependencies": {
     "binary-install": "^1.1.0"

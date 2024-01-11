@@ -1,5 +1,6 @@
 const { Binary } = require('binary-install');
 const os = require('os');
+const path = require('path');
 
 function getPlatform() {
   const type = os.type();
@@ -36,7 +37,10 @@ function getBinary() {
   const version = require('../package.json').version;
   const url = `https://github.com/wisdomstar94/onece-exec/releases/download/v${version}/onece-exec-${platform.arch}-${platform.type}.tar.gz`;
   const name = 'onece-exec';
-  return new Binary(name, url);
+  const installDirectory = path.join(__dirname, '..', 'bin');
+  return new Binary(name, url, {
+    installDirectory,
+  });
 }
 
 module.exports = getBinary;
