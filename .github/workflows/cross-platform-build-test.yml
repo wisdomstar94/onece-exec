@@ -37,11 +37,11 @@ jobs:
           cargo build --release --target x86_64-apple-darwin
 
           mkdir -p builds/onece-exec-aarch64-apple-darwin
-          cp target/aarch64-apple-darwin/release/onece-exec builds/onece-exec-aarch64-apple-darwin
+          cp target/aarch64-apple-darwin/release/onece-exec builds/onece-exec-aarch64-apple-darwin/onece-exec
           tar -C builds -czvf onece-exec-aarch64-apple-darwin.tar.gz onece-exec-aarch64-apple-darwin
           
           mkdir -p builds/onece-exec-x86_64-apple-darwin
-          cp target/x86_64-apple-darwin/release/onece-exec builds/onece-exec-x86_64-apple-darwin
+          cp target/x86_64-apple-darwin/release/onece-exec builds/onece-exec-x86_64-apple-darwin/onece-exec
           tar -C builds -czvf onece-exec-x86_64-apple-darwin.tar.gz onece-exec-x86_64-apple-darwin
 
       - name: asset upload (macos only)
@@ -49,7 +49,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: builds/onece-exec-aarch64-apple-darwin/onece-exec-aarch64-apple-darwin.tar.gz
+          file: builds/onece-exec-aarch64-apple-darwin.tar.gz
           asset_name: onece-exec-aarch64-apple-darwin.tar.gz
           tag: ${{ github.ref }}
 
@@ -58,7 +58,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: builds/onece-exec-x86_64-apple-darwin/onece-exec-x86_64-apple-darwin.tar.gz
+          file: builds/onece-exec-x86_64-apple-darwin.tar.gz
           asset_name: onece-exec-x86_64-apple-darwin.tar.gz
           tag: ${{ github.ref }}
 
@@ -78,11 +78,11 @@ jobs:
           cross build --release --target x86_64-unknown-linux-gnu
 
           mkdir -p builds/onece-exec-aarch64-unknown-linux-gnu
-          cp target/aarch64-unknown-linux-gnu/release/onece-exec builds/onece-exec-aarch64-unknown-linux-gnu
+          cp target/aarch64-unknown-linux-gnu/release/onece-exec builds/onece-exec-aarch64-unknown-linux-gnu/onece-exec
           tar -C builds -czvf onece-exec-aarch64-unknown-linux-gnu.tar.gz onece-exec-aarch64-unknown-linux-gnu
           
           mkdir -p builds/onece-exec-x86_64-unknown-linux-gnu
-          cp target/x86_64-unknown-linux-gnu/release/onece-exec builds/onece-exec-x86_64-unknown-linux-gnu
+          cp target/x86_64-unknown-linux-gnu/release/onece-exec builds/onece-exec-x86_64-unknown-linux-gnu/onece-exec
           tar -C builds -czvf onece-exec-x86_64-unknown-linux-gnu.tar.gz onece-exec-x86_64-unknown-linux-gnu
 
       - name: cargo build (windows only)
@@ -94,9 +94,9 @@ jobs:
           cargo build --release --target x86_64-pc-windows-msvc
 
           mkdir -p builds/onece-exec-aarch64-pc-windows-msvc
-          cp target/aarch64-pc-windows-msvc/release/onece-exec builds/onece-exec-aarch64-pc-windows-msvc
+          cp target/aarch64-pc-windows-msvc/release/onece-exec builds/onece-exec-aarch64-pc-windows-msvc/onece-exec
           tar -C builds -czvf onece-exec-aarch64-pc-windows-msvc.tar.gz onece-exec-aarch64-pc-windows-msvc
           
           mkdir -p builds/onece-exec-x86_64-pc-windows-msvc
-          cp target/x86_64-pc-windows-msvc/release/onece-exec builds/onece-exec-x86_64-pc-windows-msvc
+          cp target/x86_64-pc-windows-msvc/release/onece-exec builds/onece-exec-x86_64-pc-windows-msvc/onece-exec
           tar -C builds -czvf onece-exec-x86_64-pc-windows-msvc.tar.gz onece-exec-x86_64-pc-windows-msvc
