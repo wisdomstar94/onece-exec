@@ -1,4 +1,4 @@
-name: 'cross-platform-build-test'
+name: 'release deploy'
 
 # This will trigger the action on each push to the `release` branch.
 on:
@@ -7,7 +7,7 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  cross-platform-build-test:
+  build:
     permissions:
       contents: write
     strategy:
@@ -135,3 +135,20 @@ jobs:
           file: onece-exec-x86_64-pc-windows-msvc.tar.gz
           asset_name: onece-exec-x86_64-pc-windows-msvc.tar.gz
           tag: ${{ github.ref }}
+
+  npm-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+      - run: npm install
+      - run: npm publish --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_PUBLISH_KEY_NPM }}
+    needs: build
