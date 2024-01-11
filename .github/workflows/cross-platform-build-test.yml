@@ -1,0 +1,46 @@
+name: 'cross-platform-build-test'
+
+# This will trigger the action on each push to the `release` branch.
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  cross-platform-build-test:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: cargo build (macos only)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          cargo build --release --target aarch64-apple-darwin
+          cargo build --release --target x86_64-apple-darwin
+
+      - name: cargo build (ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          cargo build --release --target aarch64-unknown-linux-gnu
+          cargo build --release --target x86_64-unknown-linux-gnu
+
+      - name: cargo build (windows only)
+        if: matrix.platform == 'windows-latest'
+        run: |
+          cargo build --release --target aarch64-pc-windows-msvc
+          cargo build --release --target x86_64-pc-windows-msvc
