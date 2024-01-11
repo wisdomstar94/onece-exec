@@ -111,11 +111,11 @@ jobs:
           cargo build --release --target x86_64-pc-windows-msvc
 
           mkdir -p builds/onece-exec-aarch64-pc-windows-msvc
-          cp target/aarch64-pc-windows-msvc/release/onece-exec builds/onece-exec-aarch64-pc-windows-msvc/onece-exec
+          cp target/aarch64-pc-windows-msvc/release/onece-exec.exe builds/onece-exec-aarch64-pc-windows-msvc/onece-exec.exe
           tar -C builds -czvf onece-exec-aarch64-pc-windows-msvc.tar.gz onece-exec-aarch64-pc-windows-msvc
           
           mkdir -p builds/onece-exec-x86_64-pc-windows-msvc
-          cp target/x86_64-pc-windows-msvc/release/onece-exec builds/onece-exec-x86_64-pc-windows-msvc/onece-exec
+          cp target/x86_64-pc-windows-msvc/release/onece-exec.exe builds/onece-exec-x86_64-pc-windows-msvc/onece-exec.exe
           tar -C builds -czvf onece-exec-x86_64-pc-windows-msvc.tar.gz onece-exec-x86_64-pc-windows-msvc
 
       - name: asset upload - aarch64 (windows only)
