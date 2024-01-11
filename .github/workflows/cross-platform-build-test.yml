@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         # platform: [macos-latest, ubuntu-20.04, windows-latest]
-        platform: [ubuntu-20.04]
+        platform: [macos-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -36,6 +36,32 @@ jobs:
           cargo build --release --target aarch64-apple-darwin
           cargo build --release --target x86_64-apple-darwin
 
+          mkdir -p builds/onece-exec-aarch64-apple-darwin
+          cp target/aarch64-apple-darwin/release/onece-exec builds/onece-exec-aarch64-apple-darwin
+          tar -C builds -czvf onece-exec-aarch64-apple-darwin.tar.gz onece-exec-aarch64-apple-darwin
+          
+          mkdir -p builds/onece-exec-x86_64-apple-darwin
+          cp target/x86_64-apple-darwin/release/onece-exec builds/onece-exec-x86_64-apple-darwin
+          tar -C builds -czvf onece-exec-x86_64-apple-darwin.tar.gz onece-exec-x86_64-apple-darwin
+
+      - name: asset upload (macos only)
+        if: matrix.platform == 'macos-latest'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: builds/onece-exec-aarch64-apple-darwin/onece-exec-aarch64-apple-darwin.tar.gz
+          asset_name: onece-exec-aarch64-apple-darwin.tar.gz
+          tag: ${{ github.ref }}
+
+      - name: asset upload (macos only)
+        if: matrix.platform == 'macos-latest'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: builds/onece-exec-x86_64-apple-darwin/onece-exec-x86_64-apple-darwin.tar.gz
+          asset_name: onece-exec-x86_64-apple-darwin.tar.gz
+          tag: ${{ github.ref }}
+
       - name: cargo build (ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
         run: |
@@ -51,6 +77,14 @@ jobs:
           cross build --release --target aarch64-unknown-linux-gnu
           cross build --release --target x86_64-unknown-linux-gnu
 
+          mkdir -p builds/onece-exec-aarch64-unknown-linux-gnu
+          cp target/aarch64-unknown-linux-gnu/release/onece-exec builds/onece-exec-aarch64-unknown-linux-gnu
+          tar -C builds -czvf onece-exec-aarch64-unknown-linux-gnu.tar.gz onece-exec-aarch64-unknown-linux-gnu
+          
+          mkdir -p builds/onece-exec-x86_64-unknown-linux-gnu
+          cp target/x86_64-unknown-linux-gnu/release/onece-exec builds/onece-exec-x86_64-unknown-linux-gnu
+          tar -C builds -czvf onece-exec-x86_64-unknown-linux-gnu.tar.gz onece-exec-x86_64-unknown-linux-gnu
+
       - name: cargo build (windows only)
         if: matrix.platform == 'windows-latest'
         run: |
@@ -58,3 +92,11 @@ jobs:
           rustup target add x86_64-pc-windows-msvc
           cargo build --release --target aarch64-pc-windows-msvc
           cargo build --release --target x86_64-pc-windows-msvc
+
+          mkdir -p builds/onece-exec-aarch64-pc-windows-msvc
+          cp target/aarch64-pc-windows-msvc/release/onece-exec builds/onece-exec-aarch64-pc-windows-msvc
+          tar -C builds -czvf onece-exec-aarch64-pc-windows-msvc.tar.gz onece-exec-aarch64-pc-windows-msvc
+          
+          mkdir -p builds/onece-exec-x86_64-pc-windows-msvc
+          cp target/x86_64-pc-windows-msvc/release/onece-exec builds/onece-exec-x86_64-pc-windows-msvc
+          tar -C builds -czvf onece-exec-x86_64-pc-windows-msvc.tar.gz onece-exec-x86_64-pc-windows-msvc
