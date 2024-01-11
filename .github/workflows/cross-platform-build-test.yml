@@ -49,7 +49,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: builds/onece-exec-aarch64-apple-darwin.tar.gz
+          file: onece-exec-aarch64-apple-darwin.tar.gz
           asset_name: onece-exec-aarch64-apple-darwin.tar.gz
           tag: ${{ github.ref }}
 
@@ -58,7 +58,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: builds/onece-exec-x86_64-apple-darwin.tar.gz
+          file: onece-exec-x86_64-apple-darwin.tar.gz
           asset_name: onece-exec-x86_64-apple-darwin.tar.gz
           tag: ${{ github.ref }}
 
